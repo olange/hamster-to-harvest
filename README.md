@@ -4,7 +4,7 @@ A utility script written in Clojure to migrate [Hamster](http://projecthamster.w
 
 ## Status
 
-Work in progress. Pre-alpha stage.
+Work in progress. Pre-alpha stage. Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch.
 
 ## License
 
