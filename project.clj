@@ -5,6 +5,7 @@
             :url  "http://creativecommons.org/licenses/by-sa/4.0/"}
   :dependencies [
     [org.clojure/clojure "1.6.0"]
+    [org.clojure/data.zip "0.1.1"]
   ]
   :main ^:skip-aot hamster-to-harvest.core
   :target-path "target/%s"
