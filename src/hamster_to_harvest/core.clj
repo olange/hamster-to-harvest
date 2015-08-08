@@ -1,6 +1,8 @@
 (ns hamster-to-harvest.core
   (:require [hamster-to-harvest.hamster :as hamster]
+            [hamster-to-harvest.harvest :as harvest]
             [hamster-to-harvest.mapping :as mapping]
+            [clojure.string :as str]
             [clojure.pprint :refer :all])
   (:gen-class))
 
@@ -13,7 +15,8 @@
         time-entries (map mapping/activity->time-entry activities)]
 
         (println
-          "Hamster Activities:\n"
+          "\nHamster Activities:\n"
           (with-out-str (pprint activities))
-          "\n\nHarvest Time tracking entries:\n"
-          (with-out-str (pprint time-entries)))))
+          "\nHarvest Time tracking entries:\n"
+          harvest/csv-header-line "\n"
+          (str/join "\n" (harvest/as-csv time-entries)))))

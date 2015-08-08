@@ -21,7 +21,7 @@
 
 <!-- Target CSV document -->
 <!--
-"Date","Client","Project","Task",
+"Date","Client","Project","Task"
 ,"Notes"
 ,"Hours","First name","Last name"
 
