@@ -1,5 +1,6 @@
 (ns hamster-to-harvest.core
-  (:require [hamster-to-harvest.hamster :as hamster])
+  (:require [hamster-to-harvest.hamster :as hamster]
+            [clojure.pprint :refer :all])
   (:gen-class))
 
 
@@ -8,4 +9,5 @@
   [& args]
   (let [root (hamster/read-xml "sample.xml")
         activities (hamster/activities->xrel root)]
-        (println activities)))
+        (println "Activities:\n"
+          (with-out-str (pprint activities)))))
