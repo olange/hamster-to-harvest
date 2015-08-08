@@ -1,6 +1,6 @@
 (ns hamster-to-harvest.mapping
   (:require [hamster-to-harvest.harvest :as harvest]
-            [clojure.string :as str :refer [split]]))
+            [clojure.string :refer [split join]]))
 
 (defn starttime->date
   "Given the start time of an Hamster activity, which is a string in
@@ -25,7 +25,7 @@
   "Given the category and tags (a vector of strings) of an Hamster activity,
   return the matching task for Harvest; this mapping is specific to each Harvest user"
   [category tags]
-  (str \T category ";" tags))
+  (str \T category ";" (join \, tags)))
 
 (defn activity->time-entry
   "Given an Hamster activity record, return a corresponding Harvest
