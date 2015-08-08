@@ -27,6 +27,23 @@ You'll shortly receive an e-mail from Harvest, with a link to the results of the
 
 The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be set thru the CSV Import feature. So you'll loose the `start_time` and `end_time` fields available in Hamster activities.
 
+## Compiling and assembling
+
+Prerequisites: you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+) and [Leiningen](http://leiningen.org/#install) installed.
+
+To download all required dependencies and compile the sources:
+
+    $ lein deps
+    $ lein compile
+
+To run the application from the command-line:
+
+    $ lein run -- hamster.xml
+
+To package the application as a self-contained JAR file:
+
+    $ lein uberjar
+
 ## License
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
