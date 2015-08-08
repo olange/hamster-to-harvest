@@ -8,7 +8,24 @@ Work in progress. Pre-alpha stage. Look at the [develop](https://github.com/olan
 
 ## Usage
 
-    $ java -jar hamster-to-harvest-0.1.0-standalone.jar [args]
+First export the activites from Hamster in XML format.
+
+Then convert them to Harvest time tracking entries in CSV format:
+
+    $ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml > harvest.csv
+
+And upload them to your Harvest account; from the web interface:
+
+* navigate _Company Settings_ › _Import Data into Harvest_ › _Import Timesheets From CSV_
+* select the `harvest.csv` file, and click _Upload and Import_
+
+You'll shortly receive an e-mail from Harvest, with a link to the results of the import:
+
+<img src="doc/images/harvest-import-confirm.png" height="175" />
+
+## Caveat
+
+The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be set thru the CSV Import feature. So you'll loose the `start_time` and `end_time` fields available in Hamster activities.
 
 ## License
 
