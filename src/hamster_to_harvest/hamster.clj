@@ -30,6 +30,9 @@
   })
 
 (defn activities->xrel
+  "Given an XML zipper on the root element of an export of Hamster activities,
+  return a set of maps (an xrel), each map containing all attributes of each
+  activity (see function `activity->map` above for a description of the maps)"
   [root]
   (into #{}
         (map activity->map
