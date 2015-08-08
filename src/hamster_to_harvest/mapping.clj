@@ -37,11 +37,10 @@
   (str \T category ";" tags))
 
 (defn activity->time-entry
-  "Given an Hamster activity, return a corresponding Harvest
-  Time Tracking entry."
+  "Given an Hamster activity, return a corresponding Harvest Time Tracking entry."
   [activity]
-  ;; see function `activity->map` in hamster.clj to see
-  ;; how the activity map is factored
+  ;; see function `activity-elt->record` in hamster.clj to see
+  ;; how the activity record is factored
   (let [date              (starttime->date (:start_time activity))
         [client project]  (name->client+proj (:name activity))
         task              (category+tags->task (:category activity) (:tags activity))

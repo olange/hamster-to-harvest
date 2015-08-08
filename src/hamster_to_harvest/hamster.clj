@@ -24,7 +24,7 @@
       xml/parse
       zip/xml-zip))
 
-(defn activity->map
+(defn activity-elt->record
   "Given an activity element, return a corresponding `HamsterActivity` record,
   which is a map with all the values of the element, casted to Clojure data structures"
   [activity]
@@ -41,9 +41,9 @@
 
 (defn activities->xrel
   "Given an XML zipper on the root element of an export of Hamster activities,
-  return a set of maps (an xrel), each map containing all attributes of each
-  activity (see function `activity->map` above for a description of the maps)"
+  return a set of records (an xrel), each record containing the attributes of each
+  activity (see function `activity-elt->record` above for a description of the maps)"
   [root]
   (into #{}
-        (map activity->map
+        (map activity-elt->record
              (zip-xml/xml-> root :activity))))
