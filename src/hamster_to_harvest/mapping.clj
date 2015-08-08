@@ -1,15 +1,6 @@
 (ns hamster-to-harvest.mapping
-  (:require [clojure.string :as str :refer [split]]))
-
-(defrecord HarvestTimeEntry [
-  date
-  client
-  project
-  task
-  notes
-  hours
-  firstname
-  lastname])
+  (:require [hamster-to-harvest.harvest :as harvest]
+            [clojure.string :as str :refer [split]]))
 
 (defn starttime->date
   "Given the start time of an Hamster activity, which is a string in
@@ -37,7 +28,8 @@
   (str \T category ";" tags))
 
 (defn activity->time-entry
-  "Given an Hamster activity, return a corresponding Harvest Time Tracking entry."
+  "Given an Hamster activity record, return a corresponding Harvest
+  Time Tracking record."
   [activity]
   ;; see function `activity-elt->record` in hamster.clj to see
   ;; how the activity record is factored
@@ -48,6 +40,7 @@
         hours             (duration->hours (:duration_minutes activity))
         firstname         "Olivier"
         lastname          "Lange"]
-
-        (->HarvestTimeEntry date client project task notes
-                            hours firstname lastname)))
+        ;; beware: positional constructor; order of arguments matters hereafter
+        (harvest/->HarvestTimeEntry
+                          date client project task notes
+                          hours firstname lastname)))
