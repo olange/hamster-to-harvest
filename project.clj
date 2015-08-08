@@ -6,7 +6,9 @@
   :dependencies [
     [org.clojure/clojure "1.6.0"]
     [org.clojure/data.zip "0.1.1"]
+    [clj-stacktrace "0.2.8"]
   ]
   :main ^:skip-aot hamster-to-harvest.core
   :target-path "target/%s"
-  :profiles {:uberjar {:aot :all}})
+  :profiles {:uberjar {:aot :all}}
+  :repl-options {:caught clj-stacktrace.repl/pst+})
