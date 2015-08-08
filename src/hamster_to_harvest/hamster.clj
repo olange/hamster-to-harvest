@@ -24,6 +24,7 @@
     :category (zip-xml/attr activity :category)
     :tags     (split (zip-xml/attr activity :tags) #",\s*")
     :description (zip-xml/attr activity :description)
+    ;; Integer/MAX_VALUE should be enough to represent the duration (its about 4'074 years)
     :duration_minutes (Integer/valueOf (zip-xml/attr activity :duration_minutes))
     :start_time (zip-xml/attr activity :start_time)
     :end_time (zip-xml/attr activity :end_time)

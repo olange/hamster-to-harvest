@@ -22,7 +22,7 @@
 <!-- Target CSV document -->
 <!--
 "Date","Client","Project","Task",
-,Notes"
+,"Notes"
 ,"Hours","First name","Last name"
 
 2011-01-03,"Client XYZ","Projet Infrastruct. dév.","Admin. système"
