@@ -3,7 +3,7 @@
 <!-- Source XML document -->
 <activities>
   <activity name="ZENwebdev"
-            category="bénévolat"
+            category="offert"
             tags="Publication"
             description="Actualisé page d'accueil selon demandes AM des 09.12 et 21.12.2010"
             duration_minutes="20"

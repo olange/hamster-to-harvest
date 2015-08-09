@@ -19,13 +19,31 @@
   "Given the name of an Hamster project, return the corresponding client
   and project name of Harvest; this mapping is specific to each Harvest user"
   [name]
-  [(str \C name) (str \P name)])
+  (condp = name
+    "BSAgedco"  ["Régie Brolliet SA" "GED e-mail"]
+    "BSAsupdev" ["Régie Brolliet SA" "Infrastruct. dév."]
+    [(str "***C" name) (str "***P" name)]))
 
 (defn category+tags->task
   "Given the category and tags (a vector of strings) of an Hamster activity,
   return the matching task for Harvest; this mapping is specific to each Harvest user"
   [category tags]
-  (str \T category ";" (join \, tags)))
+  (cond
+    (some #{"Conception"} tags) "Conception"
+    (some #{"Coordination"} tags) "Suivi de projet"
+    (some #{"Développement"} tags) "Développement"
+    (some #{"Documentation"} tags) "Documentation"
+    (some #{"Support"} tags) "Support"
+    (some #{"Système"} tags) "Admin. système"
+    :else (str "***T" category ";" (join \, tags))))
+
+(defn description-and-more->notes
+  "Given the description of an Hamster activity, as well as its category
+  and tags, compose and return the corresponding notes for Harvest"
+  [description category tags]
+  (let [notes (if (= "offert" category) (str "++ Offert ++ " description) description)
+        notes (if (some #{"facturé"} tags) (str notes " (facturé)") notes)]
+    (str notes " [transcrit de Hamster]")))
 
 (defn activity->time-entry
   "Given an Hamster activity record, return a corresponding Harvest
@@ -33,11 +51,12 @@
   [activity]
   ;; see function `activity-elt->record` in hamster.clj to see
   ;; how the activity record is factored
-  (let [date              (starttime->date (:start_time activity))
-        [client project]  (name->client+proj (:name activity))
-        task              (category+tags->task (:category activity) (:tags activity))
-        notes             (:description activity)
-        hours             (duration->hours (:duration_minutes activity))
+  (let [{:keys [name category tags description duration_minutes start_time]} activity
+        date              (starttime->date start_time)
+        [client project]  (name->client+proj name)
+        task              (category+tags->task category tags)
+        notes             (description-and-more->notes description category tags)
+        hours             (duration->hours duration_minutes)
         firstname         "Olivier"
         lastname          "Lange"]
         ;; beware: positional constructor; order of arguments matters hereafter
