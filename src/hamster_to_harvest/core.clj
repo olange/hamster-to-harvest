@@ -20,20 +20,23 @@
   [options arguments]
   (let [input-fname  (first arguments)
         output-fname (:output-fname options)
-        append?      (:append options)
-        _            (println (format "Converting Hamster activities from '%s' to Harvest time tracking entries into '%s'%s"
-                                      input-fname output-fname (if append? " (appending)" "")))
-        root         (hamster/read-xml input-fname)
-        activities   (hamster/activities->xrel root)
-        time-entries (map mapping/activity->time-entry activities)]
+        append?      (:append options)]
 
-    (with-open [out (io/writer output-fname
-                               :append append? :encoding "UTF-8")]
+    (println (format "Converting Hamster activities from '%s' to Harvest time tracking entries into '%s'%s"
+                      input-fname output-fname (if append? " (appending)" "")))
+
+    (with-open [in  (io/input-stream input-fname)
+                out (io/writer output-fname :append append? :encoding "UTF-8")]
+
+      (let [root         (hamster/read-xml in)
+            activities   (hamster/activities->xrel root)
+            time-entries (map mapping/activity->time-entry activities)]
+
       (when-not append?)
         (.write out
                 (str harvest/csv-header-line "\n"))
       (.write out
-              (str/join "\n" (harvest/as-csv time-entries))))))
+              (str/join "\n" (harvest/as-csv time-entries)))))))
 
 (def cli-options [
   ["-o" "--output FILENAME" "Output filename"

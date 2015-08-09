@@ -12,7 +12,9 @@ Work in progress. Alpha stage. Look at the [develop](https://github.com/olange/h
 
 2. Convert them to Harvest time tracking entries in CSV format:
 
-    $ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml -o harvest.csv [--append]
+````
+$ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml -o harvest.csv [--append]
+````
 
 3. Upload the resulting CSV file to your Harvest account; from the web interface:
 
