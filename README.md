@@ -29,9 +29,14 @@ The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be set thru 
 
 ## Compiling and assembling
 
-Prerequisites: you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+) and [Leiningen](http://leiningen.org/#install) installed.
+If you're new to Clojure, here's how to get started hacking this project.
 
-To download all required dependencies and compile the sources:
+Prerequisites:
+
+* you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
+* and [Leiningen](http://leiningen.org/#install) installed on your computer.
+
+To download all required dependencies (needed once only) and compile the sources:
 
     $ lein deps
     $ lein compile
@@ -43,6 +48,12 @@ To run the application from the command-line:
 To package the application as a self-contained JAR file:
 
     $ lein uberjar
+
+To hack from the REPL:
+
+    $ lein repl
+    hamster-to-harvest.core=> (require '[hamster-to-harvest.core] :reload-all)
+    hamster-to-harvest.core=> (-main "hamster.xml")
 
 ## License
 
