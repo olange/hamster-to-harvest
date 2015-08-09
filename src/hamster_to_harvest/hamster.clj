@@ -15,12 +15,10 @@
   end_time])
 
 (defn read-xml
-  "Given the filename of an XML document, read and parse it,
+  "Given an input stream to an XML document, read and parse it,
   and return an XML zipper over the parsed document"
-  [fname]
-  (-> fname
-      io/resource
-      io/file
+  [input]
+  (-> input
       xml/parse
       zip/xml-zip))
 
