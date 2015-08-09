@@ -1,31 +1,31 @@
 # Hamster to Harvest
 
-A utility script written in Clojure to migrate [Hamster](http://projecthamster.wordpress.com/about/) time tracking entries to the [Harvest](https://www.getharvest.com) time tracking web service, from an XML export to a CSV file, that can be imported online.
+A utility script written in Clojure to migrate [Hamster](http://projecthamster.wordpress.com/about/) time tracking entries to the [Harvest](https://www.getharvest.com) time tracking web service, from an XML export to a CSV file -- which you can then import online.
 
 ## Status
 
-Work in progress. Pre-alpha stage. Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch.
+Work in progress. Alpha stage. Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch.
 
 ## Usage
 
-First export the activites from Hamster in XML format.
+1. Export the activites from Hamster in XML format.
 
-Then convert them to Harvest time tracking entries in CSV format:
+2. Convert them to Harvest time tracking entries in CSV format:
 
-    $ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml > harvest.csv
+    $ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml -o harvest.csv [--append]
 
-And upload them to your Harvest account; from the web interface:
+3. Upload the resulting CSV file to your Harvest account; from the web interface:
 
 * navigate _Company Settings_ › _Import Data into Harvest_ › _Import Timesheets From CSV_
-* select the `harvest.csv` file, and click _Upload and Import_
+* select your `harvest.csv` file, and click _Upload and Import_
 
-You'll shortly receive an e-mail from Harvest, with a link to the results of the import:
+4. You'll shortly receive an e-mail from Harvest, with a link to the results of the import:
 
 <img src="doc/images/harvest-import-confirm.png" height="175" />
 
 ## Caveat
 
-The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be set thru the CSV Import feature. So you'll loose the `start_time` and `end_time` fields available in Hamster activities.
+The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be set thru the CSV Import feature. So you'll loose the `start_time` and `end_time` fields of your Hamster activities.
 
 ## Compiling and assembling
 
@@ -36,14 +36,15 @@ Prerequisites:
 * you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
 * and [Leiningen](http://leiningen.org/#install) installed on your computer.
 
-To download all required dependencies (needed once only) and compile the sources:
+To download all required dependencies (needed once only) and compile the sources (`lein run` would also compile them):
 
     $ lein deps
     $ lein compile
 
 To run the application from the command-line:
 
-    $ lein run -- hamster.xml
+    $ lein run -- --help
+    $ lein run -- hamster.xml -o harvest.csv
 
 To package the application as a self-contained JAR file:
 
@@ -53,7 +54,7 @@ To hack from the REPL:
 
     $ lein repl
     hamster-to-harvest.core=> (require '[hamster-to-harvest.core] :reload-all)
-    hamster-to-harvest.core=> (-main "hamster.xml")
+    hamster-to-harvest.core=> (-main "hamster.xml" "-o" "harvest.csv")
 
 ## License
 

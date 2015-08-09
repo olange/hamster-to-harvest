@@ -4,32 +4,47 @@
             [hamster-to-harvest.harvest :as harvest]
             [hamster-to-harvest.mapping :as mapping]
             [clojure.tools.cli :as cli]
+            [clojure.java.io :as io]
             [clojure.string :as str]
             [clojure.pprint :refer :all])
   (:gen-class))
 
+(defn output-stream
+  [{:keys [output-fname]} options]
+  (if output-fname
+    (io/output-stream output-fname)
+    *out*))
+
 (defn migrate
   "Reads a sample Hamster XML export and dumps the parsed content"
   [options arguments]
-  (let [input-filename (first arguments)
-        root (hamster/read-xml input-filename)
-        activities (hamster/activities->xrel root)
+  (let [input-fname  (first arguments)
+        output-fname (:output-fname options)
+        append?      (:append options)
+        _            (println (format "Converting Hamster activities from '%s' to Harvest time tracking entries into '%s'%s"
+                                      input-fname output-fname (if append? " (appending)" "")))
+        root         (hamster/read-xml input-fname)
+        activities   (hamster/activities->xrel root)
         time-entries (map mapping/activity->time-entry activities)]
 
-        (println
-          "\nHamster Activities:\n"
-          (with-out-str (pprint activities))
-          "\nHarvest Time tracking entries:\n"
-          harvest/csv-header-line "\n"
-          (str/join "\n" (harvest/as-csv time-entries)))))
+    (with-open [out (io/writer output-fname
+                               :append append? :encoding "UTF-8")]
+      (when-not append?)
+        (.write out
+                (str harvest/csv-header-line "\n"))
+      (.write out
+              (str/join "\n" (harvest/as-csv time-entries))))))
 
 (def cli-options [
+  ["-o" "--output FILENAME" "Output filename"
+    :id :output-fname :default "harvest.csv"]
+  ["-a" "--append" "Appends to existing output file (overwrites otherwise)"]
   ["-h" "--help" "Show help"]])
 
 (defn usage [banner summary]
   (str banner
        "\n\nUsage:"
-       "\n  hamster-to-harvest [options] FILE.xml"
+       "\n  hamster-to-harvest [options] FILENAME.xml"
        "\n\nOptions:\n"
        summary))
 
