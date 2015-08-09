@@ -59,12 +59,13 @@ Prerequisites:
 * you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
 * and [Leiningen](http://leiningen.org/#install) installed on your computer.
 
-To download all required dependencies (needed once only) and compile the sources (`lein run` would also compile them):
+To download all required dependencies (needed once only) and compile the sources:
 
     $ lein deps
     $ lein compile
 
-To run the application from the command-line:
+To run the application from the command-line (which would also download the
+dependencies and compile the sources, if this had not be done before):
 
     $ lein run -- --help
     $ lein run -- hamster.xml -o harvest.csv
