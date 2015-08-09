@@ -5,8 +5,7 @@
             [hamster-to-harvest.mapping :as mapping]
             [clojure.tools.cli :as cli]
             [clojure.java.io :as io]
-            [clojure.string :as str]
-            [clojure.pprint :refer :all])
+            [clojure.string :as str])
   (:gen-class))
 
 (defn output-stream
@@ -35,7 +34,10 @@
     (if filter-name (format "\nfiltering activities on name '%s'" filter-name) "")))
 
 (defn migrate
-  "Reads a sample Hamster XML export and dumps the parsed content"
+  "Reads all activities from an Hamster XML export file given as the
+  the first (and only) argument, filter them according to the options,
+  convert them to Harvest time Tracking entries and export the results
+  in CSV format to the output file given in the options."
   [options arguments]
   (let [input-fname  (first arguments)
         output-fname (:output-fname options)
@@ -52,11 +54,11 @@
             activities   (filter (make-activity-filter-pred filter-name) activities)
             time-entries (map mapping/activity->time-entry activities)]
 
-      (when-not append?)
-        (.write out
-                (str harvest/csv-header-line "\n"))
-      (.write out
-              (str/join "\n" (harvest/as-csv time-entries)))))))
+        (when-not append?)
+          (.write out (str harvest/csv-header-line "\n"))
+
+        (.write out (str/join "\n"
+                              (harvest/as-csv time-entries)))))))
 
 (def cli-options [
   ["-o" "--output FILENAME" "Output filename"
