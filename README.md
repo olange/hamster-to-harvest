@@ -4,9 +4,10 @@ A utility script written in Clojure to migrate [Hamster](http://projecthamster.w
 
 ## Status
 
-Alpha stage, working executable. Mapping and configuration need hacking the sources.
+Alpha stage, working executable. Mapping and configuration requires hacking the sources.
 
-Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch.
+Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch
+for the latest state of the sources.
 
 ## Usage
 
