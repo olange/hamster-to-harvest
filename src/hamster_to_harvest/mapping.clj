@@ -35,6 +35,7 @@
     (some #{"Documentation"} tags) "Documentation"
     (some #{"Support"} tags) "Support"
     (some #{"Système"} tags) "Admin. système"
+    (some #{"Tests"} tags) "Tests intégration"
     :else (str "***T" category ";" (join \, tags))))
 
 (defn description-and-more->notes

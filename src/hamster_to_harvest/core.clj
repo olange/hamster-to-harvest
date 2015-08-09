@@ -10,26 +10,46 @@
   (:gen-class))
 
 (defn output-stream
+  "Given the command-line options, create an `OutputStream` out of the
+  `--output` option filename, or return the `*out*` stream if none was specified"
   [{:keys [output-fname]} options]
   (if output-fname
     (io/output-stream output-fname)
     *out*))
+
+(defn make-activity-filter-pred
+  "Given a name, return a predicate to filter Hamster activities
+  matching that name; if it is not specified, yield a predicate
+  constantly returning true"
+  [activity-name]
+  (if (nil? activity-name)
+    (constantly true)
+    (fn name-eq [activity] (= activity-name (:name activity)))))
+
+(defn summary
+  [input-fname output-fname append? filter-name]
+  (str
+    (format "Converting Hamster activities from '%s'\nto Harvest time tracking entries into '%s'"
+            input-fname output-fname)
+    (if append? " (appending)" "")
+    (if filter-name (format "\nfiltering activities on name '%s'" filter-name) "")))
 
 (defn migrate
   "Reads a sample Hamster XML export and dumps the parsed content"
   [options arguments]
   (let [input-fname  (first arguments)
         output-fname (:output-fname options)
-        append?      (:append options)]
+        append?      (:append options)
+        filter-name  (:filter-name options)]
 
-    (println (format "Converting Hamster activities from '%s' to Harvest time tracking entries into '%s'%s"
-                      input-fname output-fname (if append? " (appending)" "")))
+    (println (summary input-fname output-fname append? filter-name))
 
     (with-open [in  (io/input-stream input-fname)
                 out (io/writer output-fname :append append? :encoding "UTF-8")]
 
       (let [root         (hamster/read-xml in)
             activities   (hamster/activities->xrel root)
+            activities   (filter (make-activity-filter-pred filter-name) activities)
             time-entries (map mapping/activity->time-entry activities)]
 
       (when-not append?)
@@ -42,6 +62,8 @@
   ["-o" "--output FILENAME" "Output filename"
     :id :output-fname :default "harvest.csv"]
   ["-a" "--append" "Appends to existing output file (overwrites otherwise)"]
+  [nil "--filter:name NAME" "Filter Hamster activities on given project name"
+    :id :filter-name]
   ["-h" "--help" "Show help"]])
 
 (defn usage [banner summary]
