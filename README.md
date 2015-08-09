@@ -9,7 +9,7 @@ Work in progress. Alpha stage. Look at the [develop](https://github.com/olange/h
 ## Usage
 
 ````
-$ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml -o harvest.csv [--append] [--filter:name PROJNAME]
+$ ./hamster-to-harvest hamster.xml --output harvest.csv [--append] [--filter:name PROJNAME]
 ````
 
 # Examples
@@ -17,14 +17,14 @@ $ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml -o harvest.csv [
 All activities at once:
 
 ````
-$ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml --output harvest-bsa.csv
+$ ./hamster-to-harvest hamster.xml --output harvest-bsa.csv
 ````
 
 Incrementally, project by project:
 
 ````
-$ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml --filter:name PROJNAME1 --output harvest.csv
-$ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml --filter:name PROJNAME2 --output harvest.csv --append
+$ ./hamster-to-harvest hamster.xml --filter:name PROJNAME1 --output harvest.csv
+$ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv --append
 ````
 
 ## Migration process
@@ -34,7 +34,7 @@ $ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml --filter:name PR
 2. Convert them to Harvest time tracking entries in CSV format (see usage below for more options):
 
 ````
-$ java -jar hamster-to-harvest-0.1.0-standalone.jar hamster.xml -o harvest.csv [--append]
+$ ./hamster-to-harvest hamster.xml --output harvest.csv [--append] [--filter:name PROJNAME]
 ````
 
 3. Upload the resulting CSV file to your Harvest account; from the web interface:
@@ -69,9 +69,13 @@ To run the application from the command-line:
     $ lein run -- --help
     $ lein run -- hamster.xml -o harvest.csv
 
-To package the application as a self-contained JAR file:
+To package the application as a self-contained JAR file (in the 'target/' sub-folder):
 
     $ lein uberjar
+
+To create a cross-platform executable (in the base folder of the project):
+
+    $ lein bin
 
 To hack from the REPL:
 
