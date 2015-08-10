@@ -42,7 +42,7 @@
   [arguments options config]
   (let [input-fname   (first arguments)
         output-fname  (:output-fname options)
-        append?       (:append options)
+        append?       (:append? options)
 
         filter-name   (:filter-name options)
         activity-selector (make-activity-filter-pred filter-name)
@@ -61,9 +61,8 @@
             activities   (filter activity-selector activities)
             time-entries (map activity->time-entry activities)]
 
-        (when-not append?)
-          (.write out (str harvest/csv-header-line "\n"))
-
+        (.write out (if append? "\n"
+                                (str harvest/csv-header-line "\n")))
         (.write out (str/join "\n"
                               (harvest/as-csv time-entries)))))))
 
@@ -76,7 +75,8 @@
 (def cli-options [
   ["-o" "--output FILENAME" "Output filename"
     :id :output-fname :default "harvest.csv"]
-  ["-a" "--append" "Appends to existing output file (overwrites otherwise)"]
+  ["-a" "--append" "Appends to existing output file (overwrites otherwise)"
+    :id :append?]
   [nil "--filter:name NAME" "Filter Hamster activities on given project name"
     :id :filter-name]
   [nil "--config FILENAME" "File to read configuration from"
