@@ -32,14 +32,18 @@ Incrementally, project by project:
 
 2. Adjust the configuration to your needs:
 
-       $ cp resources/hamster-to-harvest.conf ./hamster-to-harvest.conf
-       $ vi hamster-to-harvest.conf
+   ````
+   $ cp resources/hamster-to-harvest.conf ./hamster-to-harvest.conf
+   $ vi hamster-to-harvest.conf
+   ````
 
 3. Convert them to Harvest time tracking entries in CSV format (see usage below for more options):
 
-       $ ./hamster-to-harvest hamster.xml --output harvest.csv
-                                          --config hamster-to-harvest.conf
-                                         [--append] [--filter:name PROJNAME]
+   ````
+   $ ./hamster-to-harvest hamster.xml --output harvest.csv
+                                      --config hamster-to-harvest.conf
+                                     [--append] [--filter:name PROJNAME]
+   ````
 
 4. Upload the resulting CSV file to your Harvest account; from the web interface:
 
