@@ -21,15 +21,7 @@
 
 <!-- Target CSV document -->
 <!--
-"Date","Client","Project","Task"
-,"Notes"
-,"Hours","First name","Last name"
-
-2011-01-03,"Client XYZ","Projet Infrastruct. dév.","Admin. système"
-,"++ Offert ++ Installation de Trac sur VALPARAISO (Trac+VHOST Apache HTTPD+auth. LDAP+màj. DNS) et migration des projets de station 20-3 [transcrit de Freshbooks]"
-,6,"Olivier","Lange"
-
-2011-01-03,"Client XYZ","Projet Infrastruct. dév.","Documentation"
-,"++ Offert ++ Documentation de l'installation de Trac sur VALPARAISO et de la migration de 20-3 [transcrit de Freshbooks]"
-,2,"Olivier","Lange"
+"Date","Client","Project","Task","Notes","Hours","First name","Last name"
+2011-01-03,"ZENClient","Site web","Actualisation du site","Actualisé page d'accueil selon demandes AM des 09.12 et 21.12.2010 [transcrit de Hamster]",0.3333333333333333,"Olivier","Lange"
+2011-01-07,"RZOClient","Refonte homepage","Conception graphique","Etude nouvelle mise en forme homepage [transcrit de Hamster]",2,"Olivier","Lange"
 -->

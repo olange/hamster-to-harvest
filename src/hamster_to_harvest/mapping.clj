@@ -47,9 +47,10 @@
     (str notes " [transcrit de Hamster]")))
 
 (defn activity->time-entry
-  "Given an Hamster activity record, return a corresponding Harvest
+  "Given an Hamster activity record and a configuration map containing the
+  firstname and lastname of the Harvest user, return a corresponding Harvest
   Time Tracking record."
-  [activity]
+  [firstname lastname activity]
   ;; see function `activity-elt->record` in hamster.clj to see
   ;; how the activity record is factored
   (let [{:keys [name category tags description duration_minutes start_time]} activity
@@ -57,9 +58,7 @@
         [client project]  (name->client+proj name)
         task              (category+tags->task category tags)
         notes             (description-and-more->notes description category tags)
-        hours             (duration->hours duration_minutes)
-        firstname         "Olivier"
-        lastname          "Lange"]
+        hours             (duration->hours duration_minutes)]
         ;; beware: positional constructor; order of arguments matters hereafter
         (harvest/->HarvestTimeEntry
                           date client project task notes
