@@ -1,4 +1,4 @@
-(defproject hamster-to-harvest "0.1.1"
+(defproject hamster-to-harvest "0.1.2"
   :description "Migrate from Hamster activities in XML format to Harvest entries in CSV format"
   :url "https://github.com/olange/hamster-to-harvest-csv"
   :license {:name "Creative Commons Attribution-ShareAlike 4.0 International License"
