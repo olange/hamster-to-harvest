@@ -11,41 +11,42 @@ for the latest state of the sources.
 
 ## Usage
 
-````
-$ ./hamster-to-harvest hamster.xml --output harvest.csv [--append] [--filter:name PROJNAME]
-````
+    $ ./hamster-to-harvest hamster.xml --output harvest.csv
+                           [--append] [--filter:name PROJNAME]
+                           [--config hamster-to-harvest.conf]
 
 # Examples
 
 All activities at once:
 
-````
-$ ./hamster-to-harvest hamster.xml --output harvest-bsa.csv
-````
+    $ ./hamster-to-harvest hamster.xml --output harvest-bsa.csv
 
 Incrementally, project by project:
 
-````
-$ ./hamster-to-harvest hamster.xml --filter:name PROJNAME1 --output harvest.csv
-$ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv --append
-````
+    $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME1 --output harvest.csv
+    $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv --append
 
 ## Migration process
 
 1. Export the activites from Hamster in XML format.
 
-2. Convert them to Harvest time tracking entries in CSV format (see usage below for more options):
+2. Adjust the configuration to your needs:
 
-````
-$ ./hamster-to-harvest hamster.xml --output harvest.csv [--append] [--filter:name PROJNAME]
-````
+       $ cp resources/hamster-to-harvest.conf ./hamster-to-harvest.conf
+       $ vi hamster-to-harvest.conf
 
-3. Upload the resulting CSV file to your Harvest account; from the web interface:
+3. Convert them to Harvest time tracking entries in CSV format (see usage below for more options):
 
-* navigate _Company Settings_ › _Import Data into Harvest_ › _Import Timesheets From CSV_
-* select your `harvest.csv` file, and click _Upload and Import_
+       $ ./hamster-to-harvest hamster.xml --output harvest.csv
+                                          --config hamster-to-harvest.conf
+                                         [--append] [--filter:name PROJNAME]
 
-4. You'll shortly receive an e-mail from Harvest, with a link to the results of the import:
+4. Upload the resulting CSV file to your Harvest account; from the web interface:
+
+   * _Company Settings_ › _Import Data into Harvest_ › _Import Timesheets From CSV_
+   * select your `harvest.csv` file, and click _Upload and Import_
+
+5. You'll shortly receive an e-mail from Harvest, with a link to the results of the import:
 
 <img src="doc/images/harvest-import-confirm.png" height="175" />
 

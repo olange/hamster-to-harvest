@@ -5,7 +5,8 @@
             [hamster-to-harvest.mapping :as mapping]
             [clojure.tools.cli :as cli]
             [clojure.java.io :as io]
-            [clojure.string :as str])
+            [clojure.string :as str]
+            [clojure.edn :as edn])
   (:gen-class))
 
 (defn output-stream
@@ -38,11 +39,17 @@
   the first (and only) argument, filter them according to the options,
   convert them to Harvest time Tracking entries and export the results
   in CSV format to the output file given in the options."
-  [options arguments]
-  (let [input-fname  (first arguments)
-        output-fname (:output-fname options)
-        append?      (:append options)
-        filter-name  (:filter-name options)]
+  [arguments options config]
+  (let [input-fname   (first arguments)
+        output-fname  (:output-fname options)
+        append?       (:append options)
+
+        filter-name   (:filter-name options)
+        activity-selector (make-activity-filter-pred filter-name)
+
+        firstname     (or (:firstname config) "***Firstname")
+        lastname      (or (:lastname config) "***Lastname")
+        activity->time-entry (partial mapping/activity->time-entry firstname lastname)]
 
     (println (summary input-fname output-fname append? filter-name))
 
@@ -51,8 +58,8 @@
 
       (let [root         (hamster/read-xml in)
             activities   (hamster/activities->xrel root)
-            activities   (filter (make-activity-filter-pred filter-name) activities)
-            time-entries (map mapping/activity->time-entry activities)]
+            activities   (filter activity-selector activities)
+            time-entries (map activity->time-entry activities)]
 
         (when-not append?)
           (.write out (str harvest/csv-header-line "\n"))
@@ -60,12 +67,20 @@
         (.write out (str/join "\n"
                               (harvest/as-csv time-entries)))))))
 
+(defn load-config
+  "Given the name of a configuration file, read and return
+  the [EDN](http://edn-format.org) datastructure it contains"
+  [fname]
+  (edn/read-string (slurp fname)))
+
 (def cli-options [
   ["-o" "--output FILENAME" "Output filename"
     :id :output-fname :default "harvest.csv"]
   ["-a" "--append" "Appends to existing output file (overwrites otherwise)"]
   [nil "--filter:name NAME" "Filter Hamster activities on given project name"
     :id :filter-name]
+  [nil "--config FILENAME" "File to read configuration from"
+    :id :config-fname :default "resources/hamster-to-harvest.conf"]
   ["-h" "--help" "Show help"]])
 
 (defn usage [banner summary]
@@ -88,7 +103,8 @@
   "Reads a sample Hamster XML export and dumps the parsed content"
   [& args]
   (let [{:keys [options arguments errors summary]} (cli/parse-opts args cli-options)
-        BANNER "Migrate Hamster activities (XML) to Harvest time tracking entries (CSV)"]
+        BANNER "Migrate Hamster activities (XML) to Harvest time tracking entries (CSV)"
+        config (load-config (:config-fname options))]
     (cond
       (:help options)
         (exit 0 (usage BANNER summary))
@@ -97,4 +113,4 @@
       errors
         (exit 1 (error BANNER errors))
       :else
-        (migrate options arguments))))
+        (migrate arguments options config))))
