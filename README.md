@@ -33,7 +33,6 @@ Incrementally, project by project:
 2. Adjust the configuration to your needs:
 
     ````
-    $ cp resources/hamster-to-harvest.conf ./hamster-to-harvest.conf
     $ vi hamster-to-harvest.conf
     ````
 
@@ -41,7 +40,6 @@ Incrementally, project by project:
 
     ````
     $ ./hamster-to-harvest hamster.xml --output harvest.csv
-                                       --config hamster-to-harvest.conf
                                       [--append] [--filter:name PROJNAME]
     ````
 

@@ -80,7 +80,7 @@
   [nil "--filter:name NAME" "Filter Hamster activities on given project name"
     :id :filter-name]
   [nil "--config FILENAME" "File to read configuration from"
-    :id :config-fname :default "resources/hamster-to-harvest.conf"]
+    :id :config-fname :default "hamster-to-harvest.conf"]
   ["-h" "--help" "Show help"]])
 
 (defn usage [banner summary]
