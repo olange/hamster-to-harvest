@@ -20,30 +20,58 @@
   and project name of Harvest; this mapping is specific to each Harvest user"
   [name]
   (condp = name
-    "BSAgedco"  ["Régie Brolliet SA" "GED e-mail"]
-    "BSAsupdev" ["Régie Brolliet SA" "Infrastruct. dév."]
-    [(str "***C" name) (str "***P" name)]))
+    "BSAgedco"   ["Régie Brolliet SA" "GED e-mail"]
+    "BSAsupdev"  ["Régie Brolliet SA" "Infrastruct. dév."]
+    "CFDEwebdev" ["Cofideco SA" "Site web cofideco.ch"]
+    [(str "***N" name) (str "***N" name)]))
 
-(defn category+tags->task
+(defn category+tags-and-more->task
   "Given the category and tags (a vector of strings) of an Hamster activity,
   return the matching task for Harvest; this mapping is specific to each Harvest user"
-  [category tags]
+  [category tags name]
   (cond
-    (some #{"Conception"} tags) "Conception"
-    (some #{"Coordination"} tags) "Suivi de projet"
-    (some #{"Développement"} tags) "Développement"
-    (some #{"Documentation"} tags) "Documentation"
-    (some #{"Support"} tags) "Support"
-    (some #{"Système"} tags) "Admin. système"
-    (some #{"Tests"} tags) "Tests intégration"
-    :else (str "***T" category ";" (join \, tags))))
+    ;; Mappings common to all projects
+    (some #{"Développement"} tags) "Développement"                  ;; BSA  CFDE
+    (some #{"Documentation"} tags) "Documentation"                  ;; BSA  CFDE
+    (some #{"Support"} tags) "Support"                              ;; BSA
+    (some #{"Système"} tags) "Admin. système"                       ;; BSA  CFDE
+    (some #{"Tests"} tags) "Tests intégration"                      ;; BSA
+    (some #{"Déplacement"} tags) "Déplacement"                      ;; CFDE
+    (some #{"Etude et veille"} tags) "Recherche et veille tech."    ;; CFDE
+    (some #{"Publication"} tags) "Actualisation du site"            ;; CFDE
+    (some #{"Séance de travail"} tags) "Séance de travail"          ;; CFDE
+
+    ;; Mappings specific to given projects
+    (= name "CFDEwebdev")
+      (cond
+        (some #{"Conception"} tags) "Design fonctionnel"
+        (some #{"Coordination"} tags)
+          (if (= "nonFacturé" category) "Administration" "Suivi de projet")
+        (some #{"Enseignement"} tags) "Enseignement / Formation"    ;; CFDE
+        (some #{"Design fonctionnel"} tags) "Design fonctionnel"    ;; CFDE
+        (some #{"Design graphique"} tags) "Design graphique"        ;; CFDE
+        (some #{"Stratégie et prospection"} tags) "Administration"  ;; CFDE
+        :else (str "***C" category ";T" (join \, tags)))
+    (= name "BSA*")
+      (cond
+        (some #{"Conception"} tags) "Conception"
+        (some #{"Coordination"} tags) "Suivi de projet"
+        :else (str "***C" category ";T" (join \, tags)))
+    ;; Unknown categories and tasks
+    :else (str "***C" category ";T" (join \, tags))))
 
 (defn description-and-more->notes
   "Given the description of an Hamster activity, as well as its category
   and tags, compose and return the corresponding notes for Harvest"
   [description category tags]
-  (let [notes (if (= "offert" category) (str "++ Offert ++ " description) description)
-        notes (if (some #{"facturé"} tags) (str notes " (facturé)") notes)]
+  (let [notes (condp = category
+                "offert"     (str "++ Offert ++ " description)
+                "nonFacturé" (str "++ Non facturé ++ " description)
+                "bénévolat"  (str "++ Bénévolat ++ " description)
+                "work"       description
+                             (str "++ ***C" category " ++ " description))
+        notes (if (some #{"facturé"} tags)
+                (str notes " (facturé)") notes)]
     (str notes " [transcrit de Hamster]")))
 
 (defn activity->time-entry
@@ -56,7 +84,7 @@
   (let [{:keys [name category tags description duration_minutes start_time]} activity
         date              (starttime->date start_time)
         [client project]  (name->client+proj name)
-        task              (category+tags->task category tags)
+        task              (category+tags-and-more->task category tags name)
         notes             (description-and-more->notes description category tags)
         hours             (duration->hours duration_minutes)]
         ;; beware: positional constructor; order of arguments matters hereafter
