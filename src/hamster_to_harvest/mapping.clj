@@ -60,7 +60,7 @@
           (some #{"Design graphique"} tags)   "Design graphique"
           (some #{"Stratégie et prospection"} tags) "Administration"
           :else unmatched)
-      (= name "BSA*")                                                     ;; BSA
+      (= (subs name 0 3) "BSA")                                           ;; BSA
         (cond
           (some #{"Conception"} tags)         "Conception"
           (some #{"Coordination"} tags)       "Suivi de projet"
