@@ -128,6 +128,14 @@ To create a console executable, in the base folder of the project (compatible wi
 
 ```bash
 $ lein bin
+Compiling hamster-to-harvest.core
+Compiling hamster-to-harvest.hamster
+Compiling hamster-to-harvest.harvest
+Compiling hamster-to-harvest.mapping
+Created …/hamster-to-harvest-csv/target/uberjar+uberjar/hamster-to-harvest-0.2.0.jar
+Created …/hamster-to-harvest-csv/target/uberjar/hamster-to-harvest-0.2.0-standalone.jar
+Creating standalone executable: …/hamster-to-harvest-csv/target/base+system+user+dev/hamster-to-harvest
+Copying binary to ./
 ```
 
 This single command will:
