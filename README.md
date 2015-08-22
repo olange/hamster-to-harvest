@@ -7,11 +7,11 @@ from an XML export to a CSV file -- which you can then import online.
 
 ## Status
 
-Working executable 0.3.0 released. I used it to migrate a dozen of Hamster projects
+Working executable 0.3.1 released. I used it to migrate a dozen of Hamster projects
 to Harvest. Defining the mapping requires hacking the sources (see below).
 
-Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch
-for the latest state of the sources.
+Look at the [develop](https://github.com/olange/hamster-to-harvest/tree/develop)
+branch for the latest state of the sources.
 
 ## Usage
 
@@ -40,6 +40,9 @@ $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv 
 
 1. Export the activites from Hamster in XML format.
 
+<img src="doc/images/hamster-export-xml.png" height="175"
+     title="Hamster Save As... (XML) dialog" />
+
 2. Adjust the configuration to your needs:
 
     ```bash
@@ -60,7 +63,8 @@ $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv 
 
 5. You'll shortly receive an e-mail from Harvest, with a link to the results of the import:
 
-<img src="doc/images/harvest-import-confirm.png" height="175" />
+<img src="doc/images/harvest-import-confirm.png" height="175"
+     title="Successful CSV import e-mail notification" />
 
 ## Caveat
 
@@ -126,13 +130,20 @@ the sources.
 
 Prerequisites:
 
-* you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
+* you'll need [Git](https://git-scm.com/downloads)
+* a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
 * and [Leiningen](http://leiningen.org/#install) installed on your computer.
 
 ### All at once
 
-To create a console executable, in the base folder of the project
-(works on Windows, Linux and Mac OSX):
+Checkout the sources:
+
+```bash
+$ git clone git@github.com:olange/hamster-to-harvest.git
+```
+
+and create a console executable, that will be placed in the root folder
+of the sources (working on Mac OS X, Linux and Windows):
 
 ```bash
 $ lein bin
@@ -140,8 +151,8 @@ Compiling hamster-to-harvest.core
 Compiling hamster-to-harvest.hamster
 Compiling hamster-to-harvest.harvest
 Compiling hamster-to-harvest.mapping
-Created …/hamster-to-harvest-csv/target/uberjar+uberjar/hamster-to-harvest-0.3.0.jar
-Created …/hamster-to-harvest-csv/target/uberjar/hamster-to-harvest-0.3.0-standalone.jar
+Created …/hamster-to-harvest-csv/target/uberjar+uberjar/hamster-to-harvest-0.3.1.jar
+Created …/hamster-to-harvest-csv/target/uberjar/hamster-to-harvest-0.3.1-standalone.jar
 Creating standalone executable: …/hamster-to-harvest-csv/target/base+system+user+dev/hamster-to-harvest
 Copying binary to ./
 ```
