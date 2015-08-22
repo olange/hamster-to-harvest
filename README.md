@@ -10,8 +10,8 @@ from an XML export to a CSV file -- which you can then import online.
 Working executable 0.3.0 released. I used it to migrate a dozen of Hamster projects
 to Harvest. Defining the mapping requires hacking the sources (see below).
 
-Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch
-for the latest state of the sources.
+Look at the [develop](https://github.com/olange/hamster-to-harvest/tree/develop)
+branch for the latest state of the sources.
 
 ## Usage
 
@@ -126,13 +126,20 @@ the sources.
 
 Prerequisites:
 
-* you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
+* you'll need [Git](https://git-scm.com/downloads)
+* a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
 * and [Leiningen](http://leiningen.org/#install) installed on your computer.
 
 ### All at once
 
-To create a console executable, in the base folder of the project
-(works on Windows, Linux and Mac OSX):
+Checkout the sources:
+
+```bash
+$ git clone git@github.com:olange/hamster-to-harvest.git
+```
+
+and create a console executable, that will be placed in the root folder
+of the sources (working on Mac OS X, Linux and Windows):
 
 ```bash
 $ lein bin
