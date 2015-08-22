@@ -78,7 +78,8 @@ if you do not know the [Clojure](http://clojure.org) language, but have experien
 with another scripting language.
 
 Hopefully you'll find sample idiomatic code within the script, which you can augment
-and tweek. The [Clojure Docs](https://clojuredocs.org) to your rescue for more guidance.
+and tweek. See the [Clojure Docs](https://clojuredocs.org) for a description of
+Clojure built-in functions.
 
 ### Source XML format
 
@@ -108,12 +109,12 @@ Activities in Hamster are exported in the following XML structure:
 ### Target CSV format
 
 The Harvest CSV importer requires time entries in the following CSV format and
-structure; the mapping should provide values for each of the following fields:
+structure; the mapping should yield values for each of the following fields:
 
 ```csv
 "Date","Client","Project","Task","Notes","Hours","First name","Last name"
-2011-01-03,"ZENClient","Site web","Actualisation du site","Actualisé page d'accueil selon demandes AM des 09.12 et 21.12.2010 [transcrit de Hamster]",0.3333333333333333,"Olivier","Lange"
-2011-01-07,"RZOClient","Refonte homepage","Conception graphique","Etude nouvelle mise en forme homepage [transcrit de Hamster]",2,"Olivier","Lange"
+2011-01-03,"Client ZEN","Site web","Actualisation du site","Actualisé page d'accueil selon demandes AM des 09.12 et 21.12.2010 [transcrit de Hamster]",0.3333333333333333,"Olivier","Lange"
+2011-01-07,"Client RZO","Refonte homepage","Conception graphique","Etude nouvelle mise en forme homepage [transcrit de Hamster]",2,"Olivier","Lange"
 …
 ```
 
@@ -130,7 +131,8 @@ Prerequisites:
 
 ### All at once
 
-To create a console executable, in the base folder of the project (compatible with your host operating system):
+To create a console executable, in the base folder of the project (compatible
+with your host operating system):
 
 ```bash
 $ lein bin
@@ -146,9 +148,9 @@ Copying binary to ./
 
 This single command will:
 
-1. download required dependencies;
+1. download required dependencies;
 2. compile the sources and package them in a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format));
-3. bundle this JAR and its dependencies in a single executable JAR (also called an _UberJAR_);
+3. bundle this JAR and its dependencies in a self-contained executable JAR (also called an _UberJAR_);
 4. and wrap this executable JAR in a standalone console executable.
 
 ### In separate steps
@@ -180,6 +182,21 @@ To hack from the REPL:
 $ lein repl
 hamster-to-harvest.core=> (require '[hamster-to-harvest.core] :reload-all)
 hamster-to-harvest.core=> (-main "hamster.xml" "-o" "harvest.csv")
+```
+
+Running the tests:
+
+```clojure
+$ lein test
+
+lein test hamster-to-harvest.core-test
+Converting Hamster activities from 'resources/hamster-sample.xml'
+to Harvest time tracking entries into 'resources/harvest-sample.test.csv'
+
+lein test hamster-to-harvest.mapping-test
+
+Ran 6 tests containing 8 assertions.
+0 failures, 0 errors.
 ```
 
 ## License

@@ -23,12 +23,14 @@
   [name category tags]
   (let [unmatched [(str "***N" name) (str "***N" name)] ]
     (condp = name
-      "BSAgedco"   ["Client BSA" "GED e-mail"]
-      "BSAsupdev"  ["Client BSA" "Infrastruct. dév."]
-      "CFDEwebdev" ["Client CFDE" "Site web cofideco.ch"]
-      "HTAPwebdev" (if (some #{"Publication"} tags)
-                     ["Client HTAP" "Maintenance du site"]
-                     ["Client HTAP" "Création du site"]))))
+      "BSAgedco"    ["Client BSA" "GED e-mail"]
+      "BSAsupdev"   ["Client BSA" "Infrastruct. dév."]
+      "CFDEwebdev"  ["Client CFDE" "Création site web"]
+      "HTAPwebdev"  (if (some #{"Publication"} tags)
+                      ["Client HTAP" "Maintenance du site"]
+                      ["Client HTAP" "Création du site"])
+      "ZENwebdev"   ["Client ZEN" "Création site web"]
+      "RZOhomepage" ["Client RZO" "Refonte homepage"])))
 
 (defn category+tags-and-more->task
   "Given the category and tags (a vector of strings) of an Hamster activity,
@@ -47,9 +49,12 @@
       (some #{"Publication"} tags)            "Actualisation du site"     ;; CFDE, HTAP
       (some #{"Séance de travail"} tags)      "Séance de travail"         ;; CFDE, HTAP
 
-      ;; Mappings specific to given projects
+      ;; Mappings specific to projects
       (= name "HTAPwebdev")                                               ;; HTAP
         (if (some #{"Coordination"} tags)     "Suivi de projet"
+                                              unmatched)
+      (= name "RZOhomepage")                                              ;; RZO
+        (if (some #{"Design graphique"} tags) "Design graphique"
                                               unmatched)
       (= name "CFDEwebdev")                                               ;; CFDE
         (cond
