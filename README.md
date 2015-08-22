@@ -131,8 +131,8 @@ Prerequisites:
 
 ### All at once
 
-To create a console executable, in the base folder of the project (compatible
-with your host operating system):
+To create a console executable, in the base folder of the project
+(works on Windows, Linux and Mac OSX):
 
 ```bash
 $ lein bin
@@ -149,9 +149,9 @@ Copying binary to ./
 This single command will:
 
 1. download required dependencies;
-2. compile the sources and package them in a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format));
-3. bundle this JAR and its dependencies in a self-contained executable JAR (also called an _UberJAR_);
-4. and wrap this executable JAR in a standalone console executable.
+2. compile the sources and package them in an executable [JAR](https://en.wikipedia.org/wiki/JAR_(file_format));
+3. bundle this JAR and its dependencies in a self-contained executable UberJAR;
+4. and wrap this executable UberJAR in a standalone console executable.
 
 ### In separate steps
 
@@ -170,7 +170,7 @@ $ lein run -- --help
 $ lein run -- hamster.xml -o harvest.csv
 ```
 
-To package the application as a self-contained JAR file (in the 'target/' sub-folder):
+To package the application as a self-contained JAR file (in the `target/` sub-folder):
 
 ```bash
 $ lein uberjar
