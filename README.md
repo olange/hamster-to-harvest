@@ -7,7 +7,7 @@ from an XML export to a CSV file -- which you can then import online.
 
 ## Status
 
-Working executable 0.3.0 released. I used it to migrate a dozen of Hamster projects
+Working executable 0.3.1 released. I used it to migrate a dozen of Hamster projects
 to Harvest. Defining the mapping requires hacking the sources (see below).
 
 Look at the [develop](https://github.com/olange/hamster-to-harvest/tree/develop)
@@ -151,8 +151,8 @@ Compiling hamster-to-harvest.core
 Compiling hamster-to-harvest.hamster
 Compiling hamster-to-harvest.harvest
 Compiling hamster-to-harvest.mapping
-Created …/hamster-to-harvest-csv/target/uberjar+uberjar/hamster-to-harvest-0.3.0.jar
-Created …/hamster-to-harvest-csv/target/uberjar/hamster-to-harvest-0.3.0-standalone.jar
+Created …/hamster-to-harvest-csv/target/uberjar+uberjar/hamster-to-harvest-0.3.1.jar
+Created …/hamster-to-harvest-csv/target/uberjar/hamster-to-harvest-0.3.1-standalone.jar
 Creating standalone executable: …/hamster-to-harvest-csv/target/base+system+user+dev/hamster-to-harvest
 Copying binary to ./
 ```
