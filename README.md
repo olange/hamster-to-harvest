@@ -15,20 +15,26 @@ for the latest state of the sources.
 
 ## Usage
 
-    $ ./hamster-to-harvest hamster.xml --output harvest.csv
-                           [--append] [--filter:name PROJNAME]
-                           [--config hamster-to-harvest.conf]
+```bash
+$ ./hamster-to-harvest hamster.xml --output harvest.csv
+                       [--append] [--filter:name PROJNAME]
+                       [--config hamster-to-harvest.conf]
+```
 
 ## Examples
 
 All activities at once:
 
-    $ ./hamster-to-harvest hamster.xml --output harvest-bsa.csv
+```bash
+$ ./hamster-to-harvest hamster.xml --output harvest-bsa.csv
+```
 
 Incrementally, project by project:
 
-    $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME1 --output harvest.csv
-    $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv --append
+```bash
+$ ./hamster-to-harvest hamster.xml --filter:name PROJNAME1 --output harvest.csv
+$ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv --append
+```
 
 ## Migration process
 
@@ -36,16 +42,16 @@ Incrementally, project by project:
 
 2. Adjust the configuration to your needs:
 
-    ````
+    ```bash
     $ vi hamster-to-harvest.conf
-    ````
+    ```
 
 3. Convert them to Harvest time tracking entries in CSV format (see usage below for more options):
 
-    ````
+    ```bash
     $ ./hamster-to-harvest hamster.xml --output harvest.csv
                                       [--append] [--filter:name PROJNAME]
-    ````
+    ```
 
 4. Upload the resulting CSV file to your Harvest account; from the web interface:
 
@@ -140,9 +146,9 @@ Copying binary to ./
 
 This single command will:
 
-1. download required dependencies
-2. compile the sources and package them in a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format)
-3. bundle this JAR and its dependencies in a single executable JAR (also called an _UberJAR_)
+1. download required dependencies;
+2. compile the sources and package them in a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format));
+3. bundle this JAR and its dependencies in a single executable JAR (also called an _UberJAR_);
 4. and wrap this executable JAR in a standalone console executable.
 
 ### In separate steps
