@@ -40,6 +40,9 @@ $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv 
 
 1. Export the activites from Hamster in XML format.
 
+<img src="doc/images/hamster-export-xml.png" height="175"
+     title="Hamster Save As... (XML) dialog" />
+
 2. Adjust the configuration to your needs:
 
     ```bash
@@ -60,7 +63,8 @@ $ ./hamster-to-harvest hamster.xml --filter:name PROJNAME2 --output harvest.csv 
 
 5. You'll shortly receive an e-mail from Harvest, with a link to the results of the import:
 
-<img src="doc/images/harvest-import-confirm.png" height="175" />
+<img src="doc/images/harvest-import-confirm.png" height="175"
+     title="Successful CSV import e-mail notification" />
 
 ## Caveat
 
