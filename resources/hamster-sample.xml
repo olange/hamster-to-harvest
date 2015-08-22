@@ -18,10 +18,3 @@
             start_time="2011-01-07 09:00:00"
             end_time="2011-01-07 11:00:00" />
 </activities>
-
-<!-- Target CSV document -->
-<!--
-"Date","Client","Project","Task","Notes","Hours","First name","Last name"
-2011-01-03,"ZENClient","Site web","Actualisation du site","Actualisé page d'accueil selon demandes AM des 09.12 et 21.12.2010 [transcrit de Hamster]",0.3333333333333333,"Olivier","Lange"
-2011-01-07,"RZOClient","Refonte homepage","Conception graphique","Etude nouvelle mise en forme homepage [transcrit de Hamster]",2,"Olivier","Lange"
--->
