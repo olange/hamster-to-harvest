@@ -15,6 +15,7 @@
   "\"Date\",\"Client\",\"Project\",\"Task\",\"Notes\",\"Hours\",\"First name\",\"Last name\"")
 
 (defn quoted [s]
+  ;; inspired by [clojure/data.csv](https://github.com/clojure/data.csv)
   (let [quote-char \"]
     (str quote-char
          (str/escape s {quote-char (str quote-char quote-char)})
