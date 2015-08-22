@@ -1,10 +1,14 @@
 # Hamster to Harvest
 
-A utility script written in Clojure to migrate [Hamster](http://projecthamster.wordpress.com/about/) time tracking entries to the [Harvest](https://www.getharvest.com) time tracking web service, from an XML export to a CSV file -- which you can then import online.
+A utility script written in [Clojure](http://clojure.org) to migrate
+[Hamster](http://projecthamster.wordpress.com/about/) time tracking entries
+to the [Harvest](https://www.getharvest.com) time tracking web service,
+from an XML export to a CSV file -- which you can then import online.
 
 ## Status
 
-Alpha stage, working executable. Defining the mapping requires hacking the sources (see below).
+Working executable released. I used it to migrate a dozen of Hamster projects
+to Harvest. Defining the mapping requires hacking the sources (see below).
 
 Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch
 for the latest state of the sources.
@@ -54,13 +58,21 @@ Incrementally, project by project:
 
 ## Caveat
 
-The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be set thru the CSV Import feature. So you'll loose the `start_time` and `end_time` fields of your Hamster activities.
+The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be defined thru the CSV Import feature. So you'll loose the `start_time` and `end_time` fields of your Hamster activities.
+
+Write to Harvest to ask them to include these valuable fields in the CSV importer; I did and they told they might consider adding them, if there was demand.
 
 ## Mapping
 
 The mapping happens currently in the source code. Everything is handled within
-the [mapping.clj](src/hamster_to_harvest/mapping.clj) script. Hopefully you'll
-find sample code within it, which you can adjust to your needs.
+the [mapping.clj](src/hamster_to_harvest/mapping.clj) script.
+
+I believe you should be able to adjust the mapping to your requirements, even
+if you do not know the [Clojure](http://clojure.org) language, but have experience
+with another scripting language.
+
+Hopefully you'll find sample idiomatic code within the script, which you can augment
+and tweek. The [Clojure Docs](https://clojuredocs.org) to your rescue for more guidance.
 
 ### Source XML format
 
@@ -102,30 +114,51 @@ structure; the mapping should provide values for each of the following fields:
 ## Compiling and assembling
 
 If you're new to Clojure, here's how to get started hacking this project.
+These instruction should be everything you need to adjust the mapping in
+the sources.
 
 Prerequisites:
 
 * you'll need a [Java SDK](http://www.oracle.com/technetwork/java/javase/downloads/index.html) (1.6+)
 * and [Leiningen](http://leiningen.org/#install) installed on your computer.
 
+### All at once
+
+To create a console executable, in the base folder of the project (compatible with your host operating system):
+
+```bash
+$ lein bin
+```
+
+This single command will:
+
+1. download required dependencies
+2. compile the sources and package them in a [JAR](https://en.wikipedia.org/wiki/JAR_(file_format)
+3. bundle this JAR and its dependencies in a single executable JAR (also called an _UberJAR_)
+4. and wrap this executable JAR in a standalone console executable.
+
+### In separate steps
+
 To download all required dependencies (needed once only) and compile the sources:
 
-    $ lein deps
-    $ lein compile
+```bash
+$ lein deps
+$ lein compile
+```
 
 To run the application from the command-line (which would also download the
 dependencies and compile the sources, if this had not be done before):
 
-    $ lein run -- --help
-    $ lein run -- hamster.xml -o harvest.csv
+```bash
+$ lein run -- --help
+$ lein run -- hamster.xml -o harvest.csv
+```
 
 To package the application as a self-contained JAR file (in the 'target/' sub-folder):
 
-    $ lein uberjar
-
-To create a cross-platform executable (in the base folder of the project):
-
-    $ lein bin
+```bash
+$ lein uberjar
+```
 
 To hack from the REPL:
 
