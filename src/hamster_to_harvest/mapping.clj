@@ -1,5 +1,7 @@
 (ns hamster-to-harvest.mapping
+  "Actual mapping of Hamster activities to Harvest time entries."
   (:require [hamster-to-harvest.harvest :as harvest]
+            [hamster-to-harvest.hamster :as hamster]
             [clojure.string :refer [split join]]))
 
 (defn starttime->date

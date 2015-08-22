@@ -1,4 +1,6 @@
 (ns hamster-to-harvest.harvest
+  "Definition of the Harvest time entry record and helpers
+  to represent their contents in the CSV format."
   (:require [clojure.string :as str]))
 
 (defrecord HarvestTimeEntry [
