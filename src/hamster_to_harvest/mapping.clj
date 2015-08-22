@@ -21,12 +21,12 @@
   [name category tags]
   (let [unmatched [(str "***N" name) (str "***N" name)] ]
     (condp = name
-      "BSAgedco"   ["Régie Brolliet SA" "GED e-mail"]
-      "BSAsupdev"  ["Régie Brolliet SA" "Infrastruct. dév."]
-      "CFDEwebdev" ["Cofideco SA" "Site web cofideco.ch"]
+      "BSAgedco"   ["Client BSA" "GED e-mail"]
+      "BSAsupdev"  ["Client BSA" "Infrastruct. dév."]
+      "CFDEwebdev" ["Client CFDE" "Site web cofideco.ch"]
       "HTAPwebdev" (if (some #{"Publication"} tags)
-                     ["Fondation Horst Tappe" "Maintenance du site"]
-                     ["Fondation Horst Tappe" "Création du site"]))))
+                     ["Client HTAP" "Maintenance du site"]
+                     ["Client HTAP" "Création du site"]))))
 
 (defn category+tags-and-more->task
   "Given the category and tags (a vector of strings) of an Hamster activity,
@@ -72,14 +72,16 @@
   "Given the description of an Hamster activity, as well as its category
   and tags, compose and return the corresponding notes for Harvest"
   [description category tags]
-  (let [notes (condp = category
-                "offert"     (str "++ Offert ++ " description)
-                "nonFacturé" (str "++ Non facturé ++ " description)
-                "bénévolat"  (str "++ Bénévolat ++ " description)
-                "work"       description
-                             (str "++ ***C" category " ++ " description))
-        notes (if (some #{"facturé"} tags)
-                (str notes " (facturé)") notes)]
+  (let [unmatched (str "++ ***C" category " ++ " description)
+        notes     (condp = category
+                    "offert"     (str "++ Offert ++ " description)
+                    "nonFacturé" (str "++ Non facturé ++ " description)
+                    "bénévolat"  (str "++ Bénévolat ++ " description)
+                    "work"       description
+                                 unmatched)
+        notes     (if (some #{"facturé"} tags)
+                    (str notes " (facturé)")
+                    notes)]
     (str notes " [transcrit de Hamster]")))
 
 (defn activity->time-entry
@@ -87,8 +89,10 @@
   firstname and lastname of the Harvest user, return a corresponding Harvest
   Time Tracking record."
   [firstname lastname activity]
-  ;; see function `activity-elt->record` in hamster.clj to see
-  ;; how the activity record is factored
+  ;; See the function `activity-elt->record` in ./hamster.clj to see how
+  ;; the `activity` record is factored. As well as the `HarvestTimeEntry`
+  ;; record definition in ./harvest.clj, to find the structure of the
+  ;; Harvest time entry that is returned.
   (let [{:keys [name category tags description duration_minutes start_time]} activity
         date              (starttime->date start_time)
         [client project]  (name-and-more->client+proj name category tags)
