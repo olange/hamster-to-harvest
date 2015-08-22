@@ -129,9 +129,11 @@ To create a cross-platform executable (in the base folder of the project):
 
 To hack from the REPL:
 
-    $ lein repl
-    hamster-to-harvest.core=> (require '[hamster-to-harvest.core] :reload-all)
-    hamster-to-harvest.core=> (-main "hamster.xml" "-o" "harvest.csv")
+```clojure
+$ lein repl
+hamster-to-harvest.core=> (require '[hamster-to-harvest.core] :reload-all)
+hamster-to-harvest.core=> (-main "hamster.xml" "-o" "harvest.csv")
+```
 
 ## License
 
