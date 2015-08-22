@@ -4,7 +4,7 @@ A utility script written in Clojure to migrate [Hamster](http://projecthamster.w
 
 ## Status
 
-Alpha stage, working executable. Defining the mapping requires hacking the sources.
+Alpha stage, working executable. Defining the mapping requires hacking the sources (see below).
 
 Look at the [develop](https://github.com/olange/hamster-to-harvest-csv/tree/develop) branch
 for the latest state of the sources.
@@ -15,7 +15,7 @@ for the latest state of the sources.
                            [--append] [--filter:name PROJNAME]
                            [--config hamster-to-harvest.conf]
 
-# Examples
+## Examples
 
 All activities at once:
 
@@ -55,6 +55,49 @@ Incrementally, project by project:
 ## Caveat
 
 The _Started at_, _Ended at_ and _Billed?_ fields of Harvest cannot be set thru the CSV Import feature. So you'll loose the `start_time` and `end_time` fields of your Hamster activities.
+
+## Mapping
+
+The mapping happens currently in the source code. Everything is handled within
+the [mapping.clj](src/hamster_to_harvest/mapping.clj) script. Hopefully you'll
+find sample code within it, which you can adjust to your needs.
+
+### Source XML format
+
+Activities in Hamster are exported in the following XML structure:
+
+```xml
+<?xml version="1.0" ?>
+<activities>
+  <activity name="ZENwebdev"
+            category="offert"
+            tags="Publication"
+            description="Actualisé page d'accueil selon demandes AM des 09.12 et 21.12.2010"
+            duration_minutes="20"
+            start_time="2011-01-03 00:45:00"
+            end_time="2011-01-03 01:05:00" />
+
+  <activity name="RZOhomepage"
+            category="work"
+            tags="Design graphique, facturé"
+            description="Etude nouvelle mise en forme homepage"
+            duration_minutes="120"
+            start_time="2011-01-07 09:00:00"
+            end_time="2011-01-07 11:00:00" />
+</activities>
+```
+
+### Target CSV format
+
+The Harvest CSV importer requires time entries in the following CSV format and
+structure; the mapping should provide values for each of the following fields:
+
+```csv
+"Date","Client","Project","Task","Notes","Hours","First name","Last name"
+2011-01-03,"ZENClient","Site web","Actualisation du site","Actualisé page d'accueil selon demandes AM des 09.12 et 21.12.2010 [transcrit de Hamster]",0.3333333333333333,"Olivier","Lange"
+2011-01-07,"RZOClient","Refonte homepage","Conception graphique","Etude nouvelle mise en forme homepage [transcrit de Hamster]",2,"Olivier","Lange"
+…
+```
 
 ## Compiling and assembling
 
