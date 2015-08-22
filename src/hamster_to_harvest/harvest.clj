@@ -1,4 +1,6 @@
 (ns hamster-to-harvest.harvest
+  "Definition of the Harvest time entry record and helpers
+  to represent their contents in the CSV format."
   (:require [clojure.string :as str]))
 
 (defrecord HarvestTimeEntry [
@@ -15,6 +17,7 @@
   "\"Date\",\"Client\",\"Project\",\"Task\",\"Notes\",\"Hours\",\"First name\",\"Last name\"")
 
 (defn quoted [s]
+  ;; inspired by [clojure/data.csv](https://github.com/clojure/data.csv)
   (let [quote-char \"]
     (str quote-char
          (str/escape s {quote-char (str quote-char quote-char)})

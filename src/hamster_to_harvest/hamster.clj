@@ -1,4 +1,6 @@
 (ns hamster-to-harvest.hamster
+  "Definition of Hamster activity record and helpers to read and
+  parse an Hamster exported XML file into Hamster activity records."
   (:require [clojure.java.io :as io]
             [clojure.string :as str :refer [split]]
             [clojure.xml :as xml]

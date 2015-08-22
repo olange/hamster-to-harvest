@@ -1,4 +1,5 @@
 hamster-to-harvest
+resources/harvest-sample.test.csv
 pom.xml
 pom.xml.asc
 *jar
